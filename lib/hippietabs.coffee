@@ -82,7 +82,7 @@ class HippieTabs
         editor.activate_tab(id)
 
   activateTabById: (id, trigger=true) =>
-    act = @element.find "[htid="+id+"]"
+    act = @element.find "[htabid="+id+"]"
     @activateTab(act, trigger)
 
   activateTab: (act, trigger = true) =>
