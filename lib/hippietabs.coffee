@@ -31,7 +31,7 @@ class HippieTabs
 
   startMouse: (event) =>
     @initMouseX = event.clientX
-    id = $(event.target).parent().attr('htid')
+    id = $(event.target).parent().attr('htabid')
     @activateTabById(id) if event.button is 0
     if event.button is 1
       @closeTabById(id)
@@ -64,7 +64,7 @@ class HippieTabs
     @move event.clientX
 
   createTab: (title, id, data='') =>
-    tab = "<li htid=\"#{id}\" htdata=\"#{data}\"><span>#{title}<span class=\"htab-close\"></span></span></li>"
+    tab = "<li htabid=\"#{id}\" htabdata=\"#{data}\"><span>#{title}<span class=\"htab-close\"></span></span></li>"
     @element.append tab
     tab = @element.find('li:last')
     @tabWidth = tab.width()
@@ -88,16 +88,16 @@ class HippieTabs
   activateTab: (act, trigger = true) =>
     @element.find('.htab-active').removeClass('htab-active')
     act.addClass('htab-active')
-    @element.trigger 'htabactivate',[act.attr('htid'),act.attr('htdata')]
+    @element.trigger 'htabactivate',[act.attr('htabid'),act.attr('htabdata')]
 
 
   removeTabById: (id, trigger=true) =>
-    rem = @element.find "[htid="+id+"]"
+    rem = @element.find "[htabid="+id+"]"
     @removeTab(rem, trigger)
 
   removeTab: (rem, trigger = true) =>
     activateNewTab = rem.hasClass('htab-active')
-    @element.trigger 'htabclose',[rem.attr('htid'),rem.attr('htdata')] if trigger
+    @element.trigger 'htabclose',[rem.attr('htabid'),rem.attr('htabdata')] if trigger
     rem.animate {'width': '0'}, () =>
       rem.remove()
       @activateTab @element.find('li:first') if activateNewTab
