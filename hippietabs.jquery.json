@@ -1,0 +1,22 @@
+{
+  "name":"hippietabs",
+  "version":0.2,
+  "title":"Hippie Tabs",
+  "author":
+    {
+      "name":"Cole Lawrence",
+      "email":"cole@zombiehippie.com",
+      "url":"zombiehippie.com"
+    },
+  "licenses": [
+    {
+      "type": "Creative Commons Attribution-ShareAlike 3.0 Unported License",
+      "url": "http://creativecommons.org/licenses/by-sa/3.0/"
+    }
+  ],
+  "dependencies":
+    {
+      "jquery" : ">=1.7"
+    },
+  "description":"A customizable, extendable tabs system with event triggers and animations"
+}
