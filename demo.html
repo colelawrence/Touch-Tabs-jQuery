@@ -1,0 +1,21 @@
+<html>
+<head>
+	<title>HippieTabs Demo</title>
+
+	<link href="lib/hippietabs.css" rel="stylesheet"/>
+</head>
+<body>
+	<ul class="HippieTabs">
+		<li><span>Tab 1<span class="htab-close"></span></span></li>
+		<li><span>Tab 2<span class="htab-close"></span></span></li>
+		<li><span>Tab 3<span class="htab-close"></span></span></li>
+	</ul>
+
+	<script src="lib/jquery-1.10.1.min.js"></script>
+	<script src="lib/hippietabs.js"></script>
+	<script>
+		window.hippieTabs = $('body>ul:first').hippieTabs();
+
+	</script>
+</body>
+</html>
