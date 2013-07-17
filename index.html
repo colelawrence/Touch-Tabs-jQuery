@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Hippie Tabs in Javascript : An extendable tab system with events and customizability" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Hippie Tabs in Javascript</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/ZombieHippie/Hippie-Tabs-jQuery">View on GitHub</a>
+
+          <h1 id="project_title">Hippie Tabs in Javascript</h1>
+          <h2 id="project_tagline">An extendable tab system with events and customizability</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/ZombieHippie/Hippie-Tabs-jQuery/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ZombieHippie/Hippie-Tabs-jQuery/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="hippie-tab-control-system-using-jquery" class="anchor" href="#hippie-tab-control-system-using-jquery"><span class="octicon octicon-link"></span></a>Hippie Tab Control System using JQuery</h1>
+
+<p>This is an extendable tab system that only requires you have an <code>ul</code> element on the page. It uses jQuery or Zepto and ties into event listeners for each thing it does.</p>
+
+<h2>
+<a name="set-up" class="anchor" href="#set-up"><span class="octicon octicon-link"></span></a>Set Up</h2>
+
+<pre><code>&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;HippieTabs Demo&lt;/title&gt;
+    &lt;link href="lib/hippietabs.css" rel="stylesheet"/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;ul class="HippieTabs"&gt;&lt;/ul&gt;
+
+    &lt;script src="lib/jquery-1.10.1.min.js"&gt;&lt;/script&gt;
+    &lt;script src="lib/hippietabs.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+
+        hippieTabs = $('.HippieTabs').hippieTabs();
+
+        hippieTabs.createTab("Keylime Pie","keylime_pie", "Very delicious")
+        hippieTabs.createTab("Carrots", "carrots", "Very nutritious")
+        hippieTabs.createTab("Water", "water", "My favorite drink")
+
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2>
+<a name="manipulating-tabs" class="anchor" href="#manipulating-tabs"><span class="octicon octicon-link"></span></a>Manipulating Tabs</h2>
+
+<h3>
+<a name="createtab" class="anchor" href="#createtab"><span class="octicon octicon-link"></span></a>createTab</h3>
+
+<p><code>hippieTabs.createTab(&lt;title&gt;,&lt;tabid&gt;);</code></p>
+
+<p><code>hippieTabs.createTab(&lt;title&gt;,&lt;tabid&gt;,&lt;data&gt;);</code></p>
+
+<p><em>Examples</em></p>
+
+<p><code>hippieTabs.createTab("Browse Music", "musicbrowser");</code></p>
+
+<p><code>hippieTabs.createTab("Search Library", "query1", "genre=Rock;artist=Miike Snow");</code></p>
+
+<h3>
+<a name="removetabbyid" class="anchor" href="#removetabbyid"><span class="octicon octicon-link"></span></a>removeTabById</h3>
+
+<p><code>hippieTabs.removeTabById(&lt;string&gt;);</code></p>
+
+<p><em>Example</em></p>
+
+<p><code>hippieTabs.removeTabById("query1");</code></p>
+
+<h3>
+<a name="activatetabbyid" class="anchor" href="#activatetabbyid"><span class="octicon octicon-link"></span></a>activateTabById</h3>
+
+<p><code>hippieTabs.activateTabById(&lt;string&gt;);</code></p>
+
+<p><em>Example</em></p>
+
+<p><code>hippieTabs.activateTabById("musicbrowser");</code></p>
+
+<h2>
+<a name="events" class="anchor" href="#events"><span class="octicon octicon-link"></span></a>Events</h2>
+
+<h3>
+<a name="htabcreate" class="anchor" href="#htabcreate"><span class="octicon octicon-link"></span></a>htabcreate</h3>
+
+<pre><code>hippieTabs.on( "htabcreate", function(event, htabid, htabdata, tabtitle) {
+    //called upon creation of a tab
+})
+</code></pre>
+
+<h3>
+<a name="htabclose" class="anchor" href="#htabclose"><span class="octicon octicon-link"></span></a>htabclose</h3>
+
+<pre><code>hippieTabs.on( "htabclose", function(event, htabid, htabdata) {
+    //called when the tab begins closing animation
+})
+</code></pre>
+
+<h3>
+<a name="htabactivate" class="anchor" href="#htabactivate"><span class="octicon octicon-link"></span></a>htabactivate</h3>
+
+<pre><code>hippieTabs.on( "htabctivate", function(event, htabid, htabdata) {
+    //called when a tab is selected
+})
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Hippie Tabs in Javascript maintained by <a href="https://github.com/ZombieHippie">ZombieHippie</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
