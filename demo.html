@@ -31,7 +31,7 @@
 	<script src="lib/jquery-1.10.1.min.js"></script>
 	<script src="lib/hippietabs.js"></script>
 	<script>
-		hippieTabs = $('body>ul:first').hippieTabs();
+		hippieTabs = $('.HippieTabs').hippieTabs();
 
 		hippieTabs.on('htabclose', function(event,id,data){
 			$('#tab-contents-'+id).remove()
