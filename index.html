@@ -7,6 +7,7 @@
     <meta name="description" content="Hippie Tabs in Javascript : An extendable tab system with events and customizability" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/hippietabs.css">
 
     <title>Hippie Tabs in Javascript</title>
   </head>
@@ -38,6 +39,10 @@
 
 <h2>
 <a name="set-up" class="anchor" href="#set-up"><span class="octicon octicon-link"></span></a>Set Up</h2>
+
+
+<ul class="HippieTabs"></ul>
+
 
 <pre><code>&lt;html&gt;
 &lt;head&gt;
@@ -136,4 +141,12 @@
     
 
   </body>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="jquery.hippietabs.js"></script>
+	<script>
+		hippieTabs = $('.HippieTabs').hippieTabs();
+		hippieTabs.createTab("Keylime Pie","keylime_pie","Very delicious")
+		hippieTabs.createTab("Carrots","carrots","Very nutritious")
+		hippieTabs.createTab("Water","h20","My favorite drink")
+	</script>
 </html>
