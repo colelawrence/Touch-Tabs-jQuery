@@ -1,0 +1,58 @@
+ul.HippieTabs {
+  height:2rem;
+	display:block;
+	padding:0;
+	margin:0;
+	list-style:none;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	white-space:nowrap;
+
+	/* Prevent white space from being drawn between elements*/
+	font-size: 0;
+}
+ul.HippieTabs, ul.HippieTabs>li, ul.HippieTabs>li>span{
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+ul.HippieTabs>li {
+	width:10rem;
+	font-size: 1rem;
+	height: 2rem;
+	position:relative;
+	overflow: hidden;
+	display:inline-block;
+	cursor: default;
+	background:#dbdbdb;
+}
+ul.HippieTabs>li:hover {
+	background:#c6c6c6;
+}
+ul.HippieTabs>li.htab-active {
+	background:#fff;
+}
+ul.HippieTabs>li>span {
+	display: block;
+	height: 1rem;
+	padding:.5rem 2rem .5rem 1rem;
+}
+ul.HippieTabs>li>span>span.htab-close {
+	display: block;
+	position: absolute;
+	right: .5rem;
+	top: .5rem;
+	width:1rem;
+	height:1rem;
+	background:url("img/tab-close.png");
+	background-size:2em 2em;
+	background-repeat:no-repeat;
+	background-position: 0em -1em;
+	border-radius: .5rem;
+}
+ul.HippieTabs>li>span>span.htab-close:hover {
+	background-position: 0em 0em;
+}
+ul.HippieTabs>li.htab-active {
+	z-index:1;
+}
