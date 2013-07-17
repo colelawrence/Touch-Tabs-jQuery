@@ -31,22 +31,22 @@
 	<script src="lib/jquery-1.10.1.min.js"></script>
 	<script src="lib/hippietabs.js"></script>
 	<script>
-		window.hippieTabs = $('body>ul:first').hippieTabs();
+		hippieTabs = $('body>ul:first').hippieTabs();
 
-		window.hippieTabs.element.on('htabclose', function(event,id,data){
+		hippieTabs.on('htabclose', function(event,id,data){
 			$('#tab-contents-'+id).remove()
 		})
-		window.hippieTabs.element.on('htabcreate', function(event,id,data,title){
+		hippieTabs.on('htabcreate', function(event,id,data,title){
 			$('#tab-container').append("<div id=\"tab-contents-"+id+"\">"+data+"</div>")
 		})
-		window.hippieTabs.element.on('htabactivate', function(event,id,data){
+		hippieTabs.on('htabactivate', function(event,id,data){
 			$('#tab-container').find('div').removeClass('active')
 			$("#tab-contents-"+id).addClass('active')
 		})
 
-		window.hippieTabs.createTab("Keylime Pie","keylime_pie","Very delicious")
-		window.hippieTabs.createTab("Carrots","carrots","Very nutritious")
-		window.hippieTabs.createTab("Water","h20","My favorite drink")
+		hippieTabs.createTab("Keylime Pie","keylime_pie","Very delicious")
+		hippieTabs.createTab("Carrots","carrots","Very nutritious")
+		hippieTabs.createTab("Water","h20","My favorite drink")
 	</script>
 </body>
 </html>

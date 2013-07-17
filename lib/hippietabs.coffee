@@ -22,6 +22,9 @@ class HippieTabs
     @tabWidth = @element.find('li').width()
     console.log @element
 
+  on: (eventType, fn) =>
+    @element.on eventType, fn
+
   onClickClose: (event) =>
     rem = $(event.target).parent().parent()
     @removeTab(rem)
