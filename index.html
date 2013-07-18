@@ -7,9 +7,46 @@
     <meta name="description" content="Hippie Tabs in Javascript : An extendable tab system with events and customizability" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/hippietabs.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="src/touchtabs.css">
 
-    <title>Hippie Tabs in Javascript</title>
+    <title>Touch Tabs in Javascript</title>
+    <style>
+    #header_wrap .inner {
+      padding:0;
+    }
+    #tab-container pre {
+      width:42rem;
+      margin: 0 auto;
+    }
+    #main_content{
+      width:50rem;
+      max-width: 50rem;
+      height:32rem;
+      margin:2rem auto;
+    }
+    #tab-container{
+      height:30rem;
+      width:100%;
+      -webkit-box-shadow: 0px 4px 12px rgba(50, 50, 50, 1);
+      -moz-box-shadow:    0px 4px 12px rgba(50, 50, 50, 1);
+      box-shadow:         0px 4px 12px rgba(50, 50, 50, 1);
+    }
+
+    #tab-container>div {
+      overflow:auto;
+      margin:0;
+      padding:0;
+      height:100%;
+      width:100%;
+      background:#fff;
+    }
+    #tab-container>div {
+      display:none;
+    }
+    #tab-container>div.active {
+      display:block;
+    }
+    </style>
   </head>
 
   <body>
@@ -17,14 +54,14 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/ZombieHippie/Hippie-Tabs-jQuery">View on GitHub</a>
+          <a id="forkme_banner" href="https://github.com/ZombieHippie/Touch-Tabs-jQuery">View on GitHub</a>
 
-          <h1 id="project_title">Hippie Tabs in Javascript</h1>
-          <h2 id="project_tagline">An extendable tab system with events and customizability</h2>
+          <h1 id="project_title">Touch Tabs in Javascript</h1>
+          <h2 id="project_tagline">An extendable tab system with events and customizability and touch device support!</h2>
 
             <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/ZombieHippie/Hippie-Tabs-jQuery/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/ZombieHippie/Hippie-Tabs-jQuery/tarball/master">Download this project as a tar.gz file</a>
+              <a class="zip_download_link" href="https://github.com/ZombieHippie/Touch-Tabs-jQuery/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ZombieHippie/Touch-Tabs-jQuery/tarball/master">Download this project as a tar.gz file</a>
             </section>
         </header>
     </div>
@@ -32,121 +69,141 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1>
-<a name="hippie-tab-control-system-using-jquery" class="anchor" href="#hippie-tab-control-system-using-jquery"><span class="octicon octicon-link"></span></a>JQuery Hippie Tabs Documentation</h1>
 
-<p>This is an extendable tab system that only requires you have an <code>ul</code> element on the page. It uses jQuery or Zepto and ties into event listeners for each thing it does.</p>
-
-<h2>
-<a name="set-up" class="anchor" href="#set-up"><span class="octicon octicon-link"></span></a>Set Up</h2>
+      <ul class="tab-header"></ul>
+      <div id="tab-container">
+      </div>
 
 
-<ul class="HippieTabs"></ul>
+      <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+      <script src="src/jquery.touchtabs.js"></script>
+      <script>
+      touchTabs = $('.tab-header').touchTabs();
 
-
-<pre><code>&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;HippieTabs Demo&lt;/title&gt;
-    &lt;link href="lib/hippietabs.css" rel="stylesheet"/&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;ul class="HippieTabs"&gt;&lt;/ul&gt;
-
-    &lt;script src="lib/jquery-1.10.1.min.js"&gt;&lt;/script&gt;
-    &lt;script src="lib/hippietabs.js"&gt;&lt;/script&gt;
-    &lt;script&gt;
-
-        hippieTabs = $('.HippieTabs').hippieTabs();
-
-        hippieTabs.createTab("Keylime Pie","keylime_pie", "Very delicious")
-        hippieTabs.createTab("Carrots", "carrots", "Very nutritious")
-        hippieTabs.createTab("Water", "water", "My favorite drink")
-
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-
-<h2>
-<a name="manipulating-tabs" class="anchor" href="#manipulating-tabs"><span class="octicon octicon-link"></span></a>Manipulating Tabs</h2>
-
-<h3>
-<a name="createtab" class="anchor" href="#createtab"><span class="octicon octicon-link"></span></a>createTab</h3>
-
-<p><code>hippieTabs.createTab(&lt;title&gt;,&lt;tabid&gt;);</code></p>
-
-<p><code>hippieTabs.createTab(&lt;title&gt;,&lt;tabid&gt;,&lt;data&gt;);</code></p>
-
-<p><em>Examples</em></p>
-
-<p><code>hippieTabs.createTab("Browse Music", "musicbrowser");</code></p>
-
-<p><code>hippieTabs.createTab("Search Library", "query1", "genre=Rock;artist=Miike Snow");</code></p>
-
-<h3>
-<a name="removetabbyid" class="anchor" href="#removetabbyid"><span class="octicon octicon-link"></span></a>removeTabById</h3>
-
-<p><code>hippieTabs.removeTabById(&lt;string&gt;);</code></p>
-
-<p><em>Example</em></p>
-
-<p><code>hippieTabs.removeTabById("query1");</code></p>
-
-<h3>
-<a name="activatetabbyid" class="anchor" href="#activatetabbyid"><span class="octicon octicon-link"></span></a>activateTabById</h3>
-
-<p><code>hippieTabs.activateTabById(&lt;string&gt;);</code></p>
-
-<p><em>Example</em></p>
-
-<p><code>hippieTabs.activateTabById("musicbrowser");</code></p>
-
-<h2>
-<a name="events" class="anchor" href="#events"><span class="octicon octicon-link"></span></a>Events</h2>
-
-<h3>
-<a name="htabcreate" class="anchor" href="#htabcreate"><span class="octicon octicon-link"></span></a>htabcreate</h3>
-
-<pre><code>hippieTabs.on( "htabcreate", function(event, htabid, htabdata, tabtitle) {
-    //called upon creation of a tab
-})
-</code></pre>
-
-<h3>
-<a name="htabclose" class="anchor" href="#htabclose"><span class="octicon octicon-link"></span></a>htabclose</h3>
-
-<pre><code>hippieTabs.on( "htabclose", function(event, htabid, htabdata) {
-    //called when the tab begins closing animation
-})
-</code></pre>
-
-<h3>
-<a name="htabactivate" class="anchor" href="#htabactivate"><span class="octicon octicon-link"></span></a>htabactivate</h3>
-
-<pre><code>hippieTabs.on( "htabctivate", function(event, htabid, htabdata) {
-    //called when a tab is selected
-})
-</code></pre>
+      touchTabs.on('tabclose', function(event,id){
+        $('#tab-contents-'+id).remove()
+      })
+      touchTabs.on('tabactivate', function(event,id){
+        $('#tab-container').find('div').removeClass('active')
+        $("#tab-contents-"+id).addClass('active')
+      })
+      $(function() {
+        var createPane = function(title,html){
+          var randId = Math.floor(Math.random()*16777215).toString(16)
+          $('#tab-container').append("<div id=\"tab-contents-"+randId+"\">"+html+"</div>")
+          touchTabs.createTab(randId,title,false)
+          return randId;
+        }
+        var activateId = createPane("1. Tab Manipulation",$('div#TabManipulationContent').html())
+        createPane("2. How to use Events",$('div#EventsContent').html())
+        createPane("3. Styling Guide",$('div#StyleGuideContent').html())
+        touchTabs.activateTabById(activateId);
+      })
+      </script>
       </section>
     </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Hippie Tabs in Javascript maintained by <a href="https://github.com/ZombieHippie">ZombieHippie</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+<!-- Past here is invisible, for loading the tab-containers with information -->
 
-    
+<div style="display:none" id="TabManipulationContent"><div class="markdown-body">
+      <h2>
+<a name="tab-manipulation" class="anchor" href="#tab-manipulation"><span class="octicon octicon-link"></span></a>Tab Manipulation</h2>
 
+<p>All tabs can be closed, activated, or retitled if you have their 'tabid' or "Tab Identifier". The tab identifier is not bound to the id of the element and therefore will less likely conflict with other libraries.</p>
+
+<h3>
+<a name="createtab-tabid-title-closeable-" class="anchor" href="#createtab-tabid-title-closeable-"><span class="octicon octicon-link"></span></a>createTab( &lt;tabid&gt;, &lt;title&gt;, &lt;closeable&gt; )</h3>
+
+<p><strong>tabid</strong> the tabid is a tab idetifier, it does not affect css rules because it is assigned to a tabid attribute</p>
+
+<p><strong>title</strong> the name shown on the tab is defined by your title</p>
+
+<p><strong>closeable</strong> tabs can be created with or without the close button. And those made with the close button can be styled different than those made without closeability
+</p><div class="highlight"><pre><span class="c1">// if tabs were used for your portfolio navigation</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">createTab</span><span class="p">(</span><span class="s">"home"</span><span class="p">,</span><span class="s">"About Me"</span><span class="p">,</span><span class="n">false</span><span class="p">);</span>
+<span class="c1">// Always want people to be able to refer back to the about page so we set closeable=false</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">createTab</span><span class="p">(</span><span class="s">"page1"</span><span class="p">,</span><span class="s">"Videos"</span><span class="p">,</span><span class="n">true</span><span class="p">);</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">createTab</span><span class="p">(</span><span class="s">"page2"</span><span class="p">,</span><span class="s">"Contact"</span><span class="p">,</span><span class="n">true</span><span class="p">);</span>
+<span class="c1">// People should be able to go to other pages and chose which ones to keep open so we set closeable=true</span>
+</pre></div>
+
+<h3>
+<a name="renametabbyid-tabid--new-title-" class="anchor" href="#renametabbyid-tabid--new-title-"><span class="octicon octicon-link"></span></a>renameTabById( &lt;tabid&gt; , &lt;new title&gt; )</h3>
+
+<div class="highlight"><pre><span class="n">touchTabs</span><span class="p">.</span><span class="n">renameTabById</span><span class="p">(</span><span class="s">"musiclist"</span><span class="p">,</span><span class="s">"View: Genre"</span><span class="p">);</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">renameTabById</span><span class="p">(</span><span class="s">"search"</span><span class="p">,</span><span class="s">"Search Genres"</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="closetabbyid-tabid-" class="anchor" href="#closetabbyid-tabid-"><span class="octicon octicon-link"></span></a>closeTabById( &lt;tabid&gt; )</h3>
+
+<div class="highlight"><pre><span class="c1">// Tabs created without closeability are only closeable via javascript</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">closeTabById</span><span class="p">(</span><span class="s">"search"</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="activatetabbyid-tabid-" class="anchor" href="#activatetabbyid-tabid-"><span class="octicon octicon-link"></span></a>activateTabById( &lt;tabid&gt; )</h3>
+
+<div class="highlight"><pre><span class="c1">// Switch the active tab via javascript</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">activateTabById</span><span class="p">(</span><span class="s">"musiclist2"</span><span class="p">);</span>
+</pre></div>
+    </div></div>
+<!-- End TabManipulationContent -->
+<div style="display:none" id="EventsContent">
+<div class="markdown-body">
+<h2>
+<a name="event-types" class="anchor" href="#event-types"><span class="octicon octicon-link"></span></a>Event Types</h2>
+
+<p>Events can be listened to using the 'touchTabs.on' function.
+</p><div class="highlight"><pre><span class="nx">touchTabs.on</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">eventtype</span><span class="o">&gt;</span><span class="p">,</span><span class="nx">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">tabid</span><span class="p">){</span>
+    <span class="c1">// event: default event passed with the trigger</span>
+    <span class="c1">// tabid: the tabid of the tab involved in this event</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="tabcreate" class="anchor" href="#tabcreate"><span class="octicon octicon-link"></span></a>tabcreate</h3>
+
+<p>This event type is triggered when a tab is created. This trigger passes 3 variables to the function although the last one -- which is the tab's title -- is not necessary in many cases.
+</p><div class="highlight"><pre><span class="nx">touchTabs</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"tabcreate"</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">tabid</span><span class="p">){</span>
+    <span class="c1">// event: default event passed with the trigger</span>
+    <span class="c1">// tabid: the tabid of the tab that was created</span>
+<span class="p">});</span>
+</pre></div>
+<div class="highlight"><pre><span class="nx">touchTabs</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"tabcreate"</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">tabid</span><span class="p">,</span><span class="nx">title</span><span class="p">){</span>
+    <span class="c1">// event: default event passed with the trigger</span>
+    <span class="c1">// tabid: the tabid of the tab that was created</span>
+    <span class="c1">// title: the header text of the tab</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="tabactivate" class="anchor" href="#tabactivate"><span class="octicon octicon-link"></span></a>tabactivate</h3>
+
+<p>This event type is triggered when the user "activates" a tab by clicking on it, or closing the currently active tab.
+</p><div class="highlight"><pre><span class="nx">touchTabs</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"tabactivate"</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">tabid</span><span class="p">){</span>
+    <span class="c1">// event: default event passed with the trigger</span>
+    <span class="c1">// tabid: the tabid of the tab that became active</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="tabclose" class="anchor" href="#tabclose"><span class="octicon octicon-link"></span></a>tabclose</h3>
+
+<p>This event type is triggered when the a tab is closed, which can be triggered by javascript or the user clicking the close button.
+</p><div class="highlight"><pre><span class="nx">touchTabs</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"tabclose"</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">tabid</span><span class="p">){</span>
+    <span class="c1">// event: default event passed with the trigger</span>
+    <span class="c1">// tabid: the tabid of the tab that was closed</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+<!-- End EventsContent -->
+<div id="StyleGuideContent">
+  <div class="markdown-body">
+    <h3>Coming Soon!</h3>
+  </div>
+</div>
+<!-- End StyleGuideContent -->
   </body>
-  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-  <script src="jquery.hippietabs.js"></script>
-	<script>
-		hippieTabs = $('.HippieTabs').hippieTabs();
-		hippieTabs.createTab("Keylime Pie","keylime_pie","Very delicious")
-		hippieTabs.createTab("Carrots","carrots","Very nutritious")
-		hippieTabs.createTab("Water","h20","My favorite drink")
-	</script>
 </html>
