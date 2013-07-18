@@ -25,6 +25,7 @@ ul.TouchTabs>li {
 	display:inline-block;
 	cursor: default;
 	background:#dbdbdb;
+	padding:0;
 }
 ul.TouchTabs>li:hover {
 	background:#c6c6c6;
