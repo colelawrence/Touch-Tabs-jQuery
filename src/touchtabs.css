@@ -1,4 +1,4 @@
-ul.HippieTabs {
+ul.TouchTabs {
 	height:2rem;
 	display:block;
 	padding:0;
@@ -11,12 +11,12 @@ ul.HippieTabs {
 	/* Prevent white space from being drawn between elements*/
 	font-size: 0;
 }
-ul.HippieTabs, ul.HippieTabs>li, ul.HippieTabs>li>span{
+ul.TouchTabs, ul.TouchTabs>li, ul.TouchTabs>li>span{
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 }
-ul.HippieTabs>li {
+ul.TouchTabs>li {
 	width:10rem;
 	font-size: 1rem;
 	height: 2rem;
@@ -26,18 +26,21 @@ ul.HippieTabs>li {
 	cursor: default;
 	background:#dbdbdb;
 }
-ul.HippieTabs>li:hover {
+ul.TouchTabs>li:hover {
 	background:#c6c6c6;
 }
-ul.HippieTabs>li.htab-active {
+ul.TouchTabs>li.tab-active {
 	background:#fff;
 }
-ul.HippieTabs>li>span {
+ul.TouchTabs>li>span {
 	display: block;
 	height: 1rem;
+	padding:.5rem 1rem;
+}
+ul.TouchTabs>li.closeable>span {
 	padding:.5rem 2rem .5rem 1rem;
 }
-ul.HippieTabs>li>span>span.htab-close {
+ul.TouchTabs>li>span>span.tab-close {
 	display: block;
 	position: absolute;
 	right: .5rem;
@@ -50,9 +53,9 @@ ul.HippieTabs>li>span>span.htab-close {
 	background-position: 0em -1em;
 	border-radius: .5rem;
 }
-ul.HippieTabs>li>span>span.htab-close:hover {
+ul.TouchTabs>li>span>span.tab-close:hover {
 	background-position: 0em 0em;
 }
-ul.HippieTabs>li.htab-active {
+ul.TouchTabs>li.tab-active {
 	z-index:1;
 }

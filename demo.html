@@ -21,32 +21,32 @@
 		}
 
 	</style>
-	<link href="hippietabs.css" rel="stylesheet"/>
+	<link href="src/touchtabs.css" rel="stylesheet"/>
 </head>
 <body>
-	<ul class="HippieTabs"></ul>
+	<ul class="tab-header"></ul>
 	<div id="tab-container">
 	</div>
 
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="jquery.hippietabs.js"></script>
+	<script src="src/jquery.touchtabs.js"></script>
 	<script>
-		hippieTabs = $('.HippieTabs').hippieTabs();
+		touchTabs = $('.tab-header').touchTabs();
 
-		hippieTabs.on('htabclose', function(event,id,data){
+		touchTabs.on('tabclose', function(event,id){
 			$('#tab-contents-'+id).remove()
 		})
-		hippieTabs.on('htabcreate', function(event,id,data,title){
-			$('#tab-container').append("<div id=\"tab-contents-"+id+"\">"+data+"</div>")
-		})
-		hippieTabs.on('htabactivate', function(event,id,data){
+		touchTabs.on('tabactivate', function(event,id){
 			$('#tab-container').find('div').removeClass('active')
 			$("#tab-contents-"+id).addClass('active')
 		})
 
-		hippieTabs.createTab("Keylime Pie","keylime_pie","Very delicious")
-		hippieTabs.createTab("Carrots","carrots","Very nutritious")
-		hippieTabs.createTab("Water","h20","My favorite drink")
+		var createPane = function(title,html){
+			var randId = Math.floor(Math.random()*16777215).toString(16)
+			touchTabs.createTab(randId,title,false)
+			$('#tab-container').append("<div id=\"tab-contents-"+randId+"\">"+html+"</div>")
+		}
+
 	</script>
 </body>
 </html>
