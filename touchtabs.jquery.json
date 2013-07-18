@@ -1,12 +1,12 @@
 {
-  "name":"hippietabs",
-  "version":0.2,
-  "title":"Hippie Tabs",
+  "name":"touchtabs",
+  "version":0.3,
+  "title":"Touch Tabs",
   "author":
     {
       "name":"Cole Lawrence",
       "email":"cole@zombiehippie.com",
-      "url":"zombiehippie.com"
+      "url":"http://zombiehippie.com"
     },
   "licenses": [
     {
@@ -18,5 +18,5 @@
     {
       "jquery" : ">=1.7"
     },
-  "description":"A customizable, extendable tabs system with event triggers and animations"
+  "description":"A customizable, extendable tabs system with event triggers and animations, compatible with touch screen devices"
 }
