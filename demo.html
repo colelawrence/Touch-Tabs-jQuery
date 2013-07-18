@@ -1,52 +1,165 @@
 <html style="background:#dbdbdb">
 <head>
-	<title>HippieTabs Demo</title>
+	<title>TouchTabs Demo</title>
+	<link href="src/touchtabs.css" rel="stylesheet"/>
 	<style>
+		body{
+			width:60rem;
+			height:32rem;
+			margin:2rem auto;
+		}
 		#tab-container{
-			position:relative;
+			height:30rem;
 			width:100%;
-			height:100%;
+			-webkit-box-shadow: 0px 4px 12px rgba(50, 50, 50, 1);
+			-moz-box-shadow:    0px 4px 12px rgba(50, 50, 50, 1);
+			box-shadow:         0px 4px 12px rgba(50, 50, 50, 1);
 		}
 
 		#tab-container>div {
-			top:0;
-			left:0;
-			position:absolute;
-			width:100%;
+			overflow:auto;
+			margin:0;
+			padding:0;
 			height:100%;
+			width:100%;
 			background:#fff;
 		}
+		#tab-container>div {
+			display:none;
+		}
 		#tab-container>div.active {
-			z-index:1;
+			display:block;
 		}
 
 	</style>
-	<link href="src/touchtabs.css" rel="stylesheet"/>
 </head>
 <body>
 	<ul class="tab-header"></ul>
 	<div id="tab-container">
 	</div>
 
+
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="src/jquery.touchtabs.js"></script>
 	<script>
-		touchTabs = $('.tab-header').touchTabs();
+	touchTabs = $('.tab-header').touchTabs();
 
-		touchTabs.on('tabclose', function(event,id){
-			$('#tab-contents-'+id).remove()
-		})
-		touchTabs.on('tabactivate', function(event,id){
-			$('#tab-container').find('div').removeClass('active')
-			$("#tab-contents-"+id).addClass('active')
-		})
-
+	touchTabs.on('tabclose', function(event,id){
+		$('#tab-contents-'+id).remove()
+	})
+	touchTabs.on('tabactivate', function(event,id){
+		$('#tab-container').find('div').removeClass('active')
+		$("#tab-contents-"+id).addClass('active')
+	})
+	$(function() {
 		var createPane = function(title,html){
 			var randId = Math.floor(Math.random()*16777215).toString(16)
-			touchTabs.createTab(randId,title,false)
 			$('#tab-container').append("<div id=\"tab-contents-"+randId+"\">"+html+"</div>")
+			touchTabs.createTab(randId,title,false)
+			return randId;
 		}
-
+		var activateId = createPane("1. Tab Manipulation",$('div#TabManipulationContent').html())
+		createPane("2. How to use Events",$('div#EventsContent').html())
+		createPane("3. Styling Guide",$('div#StyleGuideContent').html())
+		touchTabs.activateTabById(activateId);
+	})
 	</script>
+
+<!-- Past here is invisible, for loading the tab-containers with information -->
+
+<div style="display:none" id="TabManipulationContent"><div class="markdown-body">
+      <h2>
+<a name="tab-manipulation" class="anchor" href="#tab-manipulation"><span class="octicon octicon-link"></span></a>Tab Manipulation</h2>
+
+<p>All tabs can be closed, activated, or retitled if you have their 'tabid' or "Tab Identifier". The tab identifier is not bound to the id of the element and therefore will less likely conflict with other libraries.</p>
+
+<h3>
+<a name="createtab-tabid-title-closeable-" class="anchor" href="#createtab-tabid-title-closeable-"><span class="octicon octicon-link"></span></a>createTab( &lt;tabid&gt;, &lt;title&gt;, &lt;closeable&gt; )</h3>
+
+<p><strong>tabid</strong> the tabid is a tab idetifier, it does not affect css rules because it is assigned to a tabid attribute</p>
+
+<p><strong>title</strong> the name shown on the tab is defined by your title</p>
+
+<p><strong>closeable</strong> tabs can be created with or without the close button. And those made with the close button can be styled different than those made without closeability
+</p><div class="highlight"><pre><span class="c1">// if tabs were used for your portfolio navigation</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">createTab</span><span class="p">(</span><span class="s">"home"</span><span class="p">,</span><span class="s">"About Me"</span><span class="p">,</span><span class="n">false</span><span class="p">);</span>
+<span class="c1">// Always want people to be able to refer back to the about page so we set closeable=false</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">createTab</span><span class="p">(</span><span class="s">"page1"</span><span class="p">,</span><span class="s">"Videos"</span><span class="p">,</span><span class="n">true</span><span class="p">);</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">createTab</span><span class="p">(</span><span class="s">"page2"</span><span class="p">,</span><span class="s">"Contact"</span><span class="p">,</span><span class="n">true</span><span class="p">);</span>
+<span class="c1">// People should be able to go to other pages and chose which ones to keep open so we set closeable=true</span>
+</pre></div>
+
+<h3>
+<a name="renametabbyid-tabid--new-title-" class="anchor" href="#renametabbyid-tabid--new-title-"><span class="octicon octicon-link"></span></a>renameTabById( &lt;tabid&gt; , &lt;new title&gt; )</h3>
+
+<div class="highlight"><pre><span class="n">touchTabs</span><span class="p">.</span><span class="n">renameTabById</span><span class="p">(</span><span class="s">"musiclist"</span><span class="p">,</span><span class="s">"View: Genre"</span><span class="p">);</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">renameTabById</span><span class="p">(</span><span class="s">"search"</span><span class="p">,</span><span class="s">"Search Genres"</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="closetabbyid-tabid-" class="anchor" href="#closetabbyid-tabid-"><span class="octicon octicon-link"></span></a>closeTabById( &lt;tabid&gt; )</h3>
+
+<div class="highlight"><pre><span class="c1">// Tabs created without closeability are only closeable via javascript</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">closeTabById</span><span class="p">(</span><span class="s">"search"</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="activatetabbyid-tabid-" class="anchor" href="#activatetabbyid-tabid-"><span class="octicon octicon-link"></span></a>activateTabById( &lt;tabid&gt; )</h3>
+
+<div class="highlight"><pre><span class="c1">// Switch the active tab via javascript</span>
+<span class="n">touchTabs</span><span class="p">.</span><span class="n">activateTabById</span><span class="p">(</span><span class="s">"musiclist2"</span><span class="p">);</span>
+</pre></div>
+    </div></div>
+<!-- End TabManipulationContent -->
+<div style="display:none" id="EventsContent">
+<div class="markdown-body">
+<h2>
+<a name="event-types" class="anchor" href="#event-types"><span class="octicon octicon-link"></span></a>Event Types</h2>
+
+<p>Events can be listened to using the 'touchTabs.on' function.
+</p><div class="highlight"><pre><span class="nx">touchTabs.on</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">eventtype</span><span class="o">&gt;</span><span class="p">,</span><span class="nx">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">tabid</span><span class="p">){</span>
+    <span class="c1">// event: default event passed with the trigger</span>
+    <span class="c1">// tabid: the tabid of the tab involved in this event</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="tabcreate" class="anchor" href="#tabcreate"><span class="octicon octicon-link"></span></a>tabcreate</h3>
+
+<p>This event type is triggered when a tab is created. This trigger passes 3 variables to the function although the last one -- which is the tab's title -- is not necessary in many cases.
+</p><div class="highlight"><pre><span class="nx">touchTabs</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"tabcreate"</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">tabid</span><span class="p">){</span>
+    <span class="c1">// event: default event passed with the trigger</span>
+    <span class="c1">// tabid: the tabid of the tab that was created</span>
+<span class="p">});</span>
+</pre></div>
+<div class="highlight"><pre><span class="nx">touchTabs</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"tabcreate"</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">tabid</span><span class="p">,</span><span class="nx">title</span><span class="p">){</span>
+    <span class="c1">// event: default event passed with the trigger</span>
+    <span class="c1">// tabid: the tabid of the tab that was created</span>
+    <span class="c1">// title: the header text of the tab</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="tabactivate" class="anchor" href="#tabactivate"><span class="octicon octicon-link"></span></a>tabactivate</h3>
+
+<p>This event type is triggered when the user "activates" a tab by clicking on it, or closing the currently active tab.
+</p><div class="highlight"><pre><span class="nx">touchTabs</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"tabactivate"</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">tabid</span><span class="p">){</span>
+    <span class="c1">// event: default event passed with the trigger</span>
+    <span class="c1">// tabid: the tabid of the tab that became active</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="tabclose" class="anchor" href="#tabclose"><span class="octicon octicon-link"></span></a>tabclose</h3>
+
+<p>This event type is triggered when the a tab is closed, which can be triggered by javascript or the user clicking the close button.
+</p><div class="highlight"><pre><span class="nx">touchTabs</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">"tabclose"</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span><span class="nx">tabid</span><span class="p">){</span>
+    <span class="c1">// event: default event passed with the trigger</span>
+    <span class="c1">// tabid: the tabid of the tab that was closed</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+<!-- End EventsContent -->
 </body>
 </html>

@@ -17,13 +17,12 @@ TouchTabs = (function() {
   function TouchTabs(element) {
     this.element = element;
     this.move = __bind(this.move, this);
-    this.onTouchMove = __bind(this.onTouchMove, this);
-    this.removeTab = __bind(this.removeTab, this);
-    this.removeTabById = __bind(this.removeTabById, this);
-    this.activateTab = __bind(this.activateTab, this);
+    this.closeTabById = __bind(this.closeTabById, this);
+    this.renameTabById = __bind(this.renameTabById, this);
     this.activateTabById = __bind(this.activateTabById, this);
     this.bindTouch = __bind(this.bindTouch, this);
     this.createTab = __bind(this.createTab, this);
+    this.onTouchMove = __bind(this.onTouchMove, this);
     this.onMouseMove = __bind(this.onMouseMove, this);
     this.onTouchEnd = __bind(this.onTouchEnd, this);
     this.onMouseLeave = __bind(this.onMouseLeave, this);
@@ -53,14 +52,14 @@ TouchTabs = (function() {
 
   TouchTabs.prototype.onClickClose = function(event) {
     var rem;
-    rem = $(event.target).parent().parent();
+    rem = $(event.target).parents('li.closeable');
     return this.removeTab(rem);
   };
 
   TouchTabs.prototype.startMouse = function(event) {
     var id;
     this.initMouseX = event.clientX;
-    id = $(event.target).parent().attr('tabid');
+    id = $(event.target).parents('li').attr('tabid');
     if (event.button === 0) {
       this.activateTabById(id);
     }
@@ -103,12 +102,19 @@ TouchTabs = (function() {
     return this.move(event.clientX);
   };
 
+  TouchTabs.prototype.onTouchMove = function(event) {
+    this.dragging = true;
+    event.preventDefault();
+    event.stopPropagation();
+    return this.move(event.originalEvent.changedTouches[0].pageX);
+  };
+
   TouchTabs.prototype.createTab = function(id, title, closeable) {
     var tab;
     if (closeable == null) {
       closeable = true;
     }
-    tab = "<li tabid=\"" + id + "\"><span>" + title + (closeable ? "<span class=\"tab-close\"></span>" : "") + "</span></li>";
+    tab = "<li tabid=\"" + id + "\"><span>            <span class=\"title\">" + title + "</span>            " + (closeable ? "<span class=\"tab-close\"></span>" : "") + "          </span></li>";
     this.element.append(tab);
     tab = this.element.find('li:last');
     this.tabWidth = tab.width();
@@ -142,33 +148,34 @@ TouchTabs = (function() {
     if (trigger == null) {
       trigger = true;
     }
-    act = this.element.find("[tabid=" + id + "]");
-    return this.activateTab(act, trigger);
-  };
-
-  TouchTabs.prototype.activateTab = function(act, trigger) {
-    if (trigger == null) {
-      trigger = true;
+    act = this.findById(this.element, id, "tab activation");
+    if (act === null) {
+      return;
     }
     this.element.find('.tab-active').removeClass('tab-active');
     act.addClass('tab-active');
     return this.element.trigger('tabactivate', [act.attr('tabid')]);
   };
 
-  TouchTabs.prototype.removeTabById = function(id, trigger) {
-    var rem;
-    if (trigger == null) {
-      trigger = true;
+  TouchTabs.prototype.renameTabById = function(id, newname) {
+    var act;
+    act = this.findById(this.element, id, "tab renaming");
+    if (act === null) {
+      return;
     }
-    rem = this.element.find("[tabid=" + id + "]");
-    return this.removeTab(rem, trigger);
+    act = act.find("span>span.title");
+    return act.html(newname);
   };
 
-  TouchTabs.prototype.removeTab = function(rem, trigger) {
-    var activateNewTab,
+  TouchTabs.prototype.closeTabById = function(id, trigger) {
+    var activateNewTab, rem,
       _this = this;
     if (trigger == null) {
       trigger = true;
+    }
+    rem = this.findById(this.element, id, "removal");
+    if (rem === null) {
+      return;
     }
     activateNewTab = rem.hasClass('tab-active');
     if (trigger) {
@@ -179,16 +186,20 @@ TouchTabs = (function() {
     }, function() {
       rem.remove();
       if (activateNewTab) {
-        return _this.activateTab(_this.element.find('li:first'));
+        return _this.activateTabById(_this.element.find('li:first').attr('tabid'));
       }
     });
   };
 
-  TouchTabs.prototype.onTouchMove = function(event) {
-    this.dragging = true;
-    event.preventDefault();
-    event.stopPropagation();
-    return this.move(event.originalEvent.changedTouches[0].pageX);
+  TouchTabs.prototype.findById = function(element, id, operation) {
+    var tab;
+    tab = element.find("[tabid=" + id + "]");
+    if (tab.length === 0) {
+      throw "Error: Could not select tab with tabid:\"" + id + "\". Failed attempted " + operation;
+      return null;
+    } else {
+      return tab;
+    }
   };
 
   TouchTabs.prototype.move = function(Xpos) {

@@ -11,7 +11,7 @@ ul.TouchTabs {
 	/* Prevent white space from being drawn between elements*/
 	font-size: 0;
 }
-ul.TouchTabs, ul.TouchTabs>li, ul.TouchTabs>li>span{
+ul.TouchTabs, ul.TouchTabs>li, ul.TouchTabs>li span{
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;

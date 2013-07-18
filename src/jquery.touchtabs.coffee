@@ -29,13 +29,14 @@ class TouchTabs
   on: (eventType, fn) =>
     @element.on eventType, fn
 
+  ## TOUCH & MOUSE EVENT BINDING
   onClickClose: (event) =>
-    rem = $(event.target).parent().parent()
+    rem = $(event.target).parents('li.closeable')
     @removeTab(rem)
 
   startMouse: (event) =>
     @initMouseX = event.clientX
-    id = $(event.target).parent().attr('tabid')
+    id = $(event.target).parents('li').attr('tabid')
     @activateTabById(id) if event.button is 0
     if event.button is 1
       @closeTabById(id)
@@ -60,8 +61,18 @@ class TouchTabs
     event.preventDefault()
     @move event.clientX
 
+  onTouchMove: (event) =>
+    @dragging = true
+    event.preventDefault()
+    event.stopPropagation()
+    @move event.originalEvent.changedTouches[0].pageX
+
+  ## MANIPULATION
   createTab: (id, title, closeable=true) =>
-    tab = "<li tabid=\"#{id}\"><span>#{title}#{if closeable then "<span class=\"tab-close\"></span>" else ""}</span></li>"
+    tab = "<li tabid=\"#{id}\"><span>
+            <span class=\"title\">#{title}</span>
+            #{if closeable then "<span class=\"tab-close\"></span>" else ""}
+          </span></li>"
     @element.append tab
     tab = @element.find('li:last')
     @tabWidth = tab.width()
@@ -87,31 +98,34 @@ class TouchTabs
       event.stopPropagation()
 
   activateTabById: (id,trigger=true) =>
-    act = @element.find "[tabid="+id+"]"
-    @activateTab(act, trigger)
-
-  activateTab: (act, trigger = true) =>
+    act = @findById @element, id, "tab activation"
+    return if act is null
     @element.find('.tab-active').removeClass('tab-active')
     act.addClass 'tab-active'
     @element.trigger 'tabactivate',[act.attr('tabid')]
 
+  renameTabById: (id, newname) =>
+    act = @findById @element, id, "tab renaming"
+    return if act is null
+    act = act.find "span>span.title"
+    act.html(newname)
 
-  removeTabById: (id, trigger=true) =>
-    rem = @element.find "[tabid="+id+"]"
-    @removeTab(rem, trigger)
-
-  removeTab: (rem, trigger = true) =>
+  closeTabById: (id, trigger=true) =>
+    rem = @findById @element, id, "removal"
+    return if rem is null
     activateNewTab = rem.hasClass('tab-active')
     @element.trigger 'tabclose',[rem.attr('tabid')] if trigger
     rem.animate {'width': '0'}, () =>
       rem.remove()
-      @activateTab @element.find('li:first') if activateNewTab
+      @activateTabById @element.find('li:first').attr 'tabid' if activateNewTab
 
-  onTouchMove: (event) =>
-    @dragging = true
-    event.preventDefault()
-    event.stopPropagation()
-    @move event.originalEvent.changedTouches[0].pageX
+  findById: (element, id, operation) ->
+    tab = element.find "[tabid="+id+"]"
+    if tab.length is 0
+      throw "Error: Could not select tab with tabid:\"#{id}\". Failed attempted #{operation}"
+      return null
+    else 
+      tab
 
   move: (Xpos) =>
     offset = Xpos - @initMouseX
