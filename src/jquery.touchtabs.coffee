@@ -60,12 +60,12 @@ class TouchTabs
     event.preventDefault()
     @move event.clientX
 
-  createTab: (id, title, closable=true) =>
-    tab = "<li tabid=\"#{id}\"><span>#{title}<span class=\"tab-close\"></span></span></li>"
+  createTab: (id, title, closeable=true) =>
+    tab = "<li tabid=\"#{id}\"><span>#{title}#{if closeable then "<span class=\"tab-close\"></span>" else ""}</span></li>"
     @element.append tab
     tab = @element.find('li:last')
     @tabWidth = tab.width()
-    tab.addClass "closeable" if closable
+    tab.addClass "closeable" if closeable
     @element.trigger 'tabcreate',[id,title]
     @bindTouch tab
     @activateTabById id

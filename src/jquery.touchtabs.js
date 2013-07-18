@@ -103,16 +103,16 @@ TouchTabs = (function() {
     return this.move(event.clientX);
   };
 
-  TouchTabs.prototype.createTab = function(id, title, closable) {
+  TouchTabs.prototype.createTab = function(id, title, closeable) {
     var tab;
-    if (closable == null) {
-      closable = true;
+    if (closeable == null) {
+      closeable = true;
     }
-    tab = "<li tabid=\"" + id + "\"><span>" + title + "<span class=\"tab-close\"></span></span></li>";
+    tab = "<li tabid=\"" + id + "\"><span>" + title + (closeable ? "<span class=\"tab-close\"></span>" : "") + "</span></li>";
     this.element.append(tab);
     tab = this.element.find('li:last');
     this.tabWidth = tab.width();
-    if (closable) {
+    if (closeable) {
       tab.addClass("closeable");
     }
     this.element.trigger('tabcreate', [id, title]);
