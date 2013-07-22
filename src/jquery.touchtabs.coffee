@@ -37,9 +37,10 @@ class TouchTabs
   startMouse: (event) =>
     @initMouseX = event.clientX
     id = $(event.target).parents('li').attr('tabid')
-    @activateTabById(id) if event.button is 0
-    if event.button is 1
-      @closeTabById(id)
+    @activateTabById(id) if event.button is 0 
+    if event.button is 1 # Middle mouse click
+      clos = @findById @element, id, "check middle mouse click"
+      @closeTabById(id) if clos.hasClass 'closeable'
       event.preventDefault()
     @dragging = true
 
@@ -113,11 +114,11 @@ class TouchTabs
   closeTabById: (id, trigger=true) =>
     rem = @findById @element, id, "removal"
     return if rem is null
-    activateNewTab = rem.hasClass('tab-active')
+    needToActivateNewTab = rem.hasClass('tab-active')
     @element.trigger 'tabclose',[rem.attr('tabid')] if trigger
     rem.animate {'width': '0'}, () =>
       rem.remove()
-      @activateTabById @element.find('li:first').attr 'tabid' if activateNewTab
+      @activateTabById @element.find('li:first').attr 'tabid' if needToActivateNewTab
 
   findById: (element, id, operation) ->
     tab = element.find "[tabid="+id+"]"

@@ -57,14 +57,17 @@ TouchTabs = (function() {
   };
 
   TouchTabs.prototype.startMouse = function(event) {
-    var id;
+    var clos, id;
     this.initMouseX = event.clientX;
     id = $(event.target).parents('li').attr('tabid');
     if (event.button === 0) {
       this.activateTabById(id);
     }
     if (event.button === 1) {
-      this.closeTabById(id);
+      clos = this.findById(this.element, id, "check middle mouse click");
+      if (clos.hasClass('closeable')) {
+        this.closeTabById(id);
+      }
       event.preventDefault();
     }
     return this.dragging = true;
@@ -168,7 +171,7 @@ TouchTabs = (function() {
   };
 
   TouchTabs.prototype.closeTabById = function(id, trigger) {
-    var activateNewTab, rem,
+    var needToActivateNewTab, rem,
       _this = this;
     if (trigger == null) {
       trigger = true;
@@ -177,7 +180,7 @@ TouchTabs = (function() {
     if (rem === null) {
       return;
     }
-    activateNewTab = rem.hasClass('tab-active');
+    needToActivateNewTab = rem.hasClass('tab-active');
     if (trigger) {
       this.element.trigger('tabclose', [rem.attr('tabid')]);
     }
@@ -185,7 +188,7 @@ TouchTabs = (function() {
       'width': '0'
     }, function() {
       rem.remove();
-      if (activateNewTab) {
+      if (needToActivateNewTab) {
         return _this.activateTabById(_this.element.find('li:first').attr('tabid'));
       }
     });
