@@ -67,44 +67,138 @@
     </div>
 
     <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-
-      <ul class="tab-header"></ul>
-      <div id="tab-container">
-      </div>
-
-
-      <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-      <script src="src/jquery.touchtabs.js"></script>
-      <script>
-      touchTabs = $('.tab-header').touchTabs();
-
-      touchTabs.on('tabclose', function(event,id){
-        $('#tab-contents-'+id).remove()
-      })
-      touchTabs.on('tabactivate', function(event,id){
-        $('#tab-container').find('div').removeClass('active')
-        $("#tab-contents-"+id).addClass('active')
-      })
-      $(function() {
-        var createPane = function(title,html){
-          var randId = Math.floor(Math.random()*16777215).toString(16)
-          $('#tab-container').append("<div id=\"tab-contents-"+randId+"\">"+html+"</div>")
-          touchTabs.createTab(randId,title,false)
-          return randId;
-        }
-        var activateId = createPane("1. Tab Manipulation",$('div#TabManipulationContent').html())
-        createPane("2. How to use Events",$('div#EventsContent').html())
-        createPane("3. Styling Guide",$('div#StyleGuideContent').html())
-        touchTabs.activateTabById(activateId);
-      })
-      </script>
-      </section>
-    </div>
+<div id="main_content_wrap" class="outer">
+    <section id="main_content" class="inner">
+        <style>
+        /* "#tab-container>div" selects the tab windows we make */
+            #tab-container>div {
+              overflow:auto;
+              height:100%;
+              width:100%;
+              background:#fff;
+            }
+            #tab-container>div {
+              display:none;
+            }
+            #tab-container>div.active {
+              display:block;
+            }
+        </style>
+        <ul class="tab-header"></ul>
+        <div id="tab-container"></div>
+      
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="src/jquery.touchtabs.js"></script>
+        <script>
+        touchTabs = $('.tab-header').touchTabs();
+      
+        touchTabs.on('tabclose', function(event,id){
+            $('#tab-contents-'+id).remove()
+        })
+        touchTabs.on('tabactivate', function(event,id){
+            $('#tab-container').find('div').removeClass('active')
+            $("#tab-contents-"+id).addClass('active')
+        })
+        $(function() {
+            // createPane is not implemented by the plugin, this makes it more versatile
+            // the createPane function is an example of how I set up my panes
+            var createPane = function(title,html){
+                // create a random hexadecimal for the tab id
+                var randId = Math.floor(Math.random()*16777215).toString(16)
+                // this tab-container is given an id we can easily refer back to
+                $('#tab-container').append('<div id="tab-contents-'+randId+'">'+html+'</div>')
+                // createTab tabid = randId, tab title = title, tab can be closed = false
+                touchTabs.createTab(randId,title,false)
+                // return randId for activating
+                return randId
+            }
+            var activateId = createPane("Getting Started",$('div#GettingStartedContent').html())
+            createPane("1. Tab Manipulation",$('div#TabManipulationContent').html())
+            createPane("2. How to use Events",$('div#EventsContent').html())
+            createPane("3. Styling Guide",$('div#StyleGuideContent').html())
+            touchTabs.activateTabById(activateId);
+        })
+        </script>
+    </section>
+</div>
 
 <!-- Past here is invisible, for loading the tab-containers with information -->
+<div style="display:none" id="GettingStartedContent"><div class="markdown-body">
+      <h1>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h1>
 
+<p><strong>The base code for starting everything is:</strong>
+</p><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"tab-header"</span><span class="nt">&gt;&lt;/ul&gt;</span>
+      
+<span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">"http://code.jquery.com/jquery-1.10.1.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">"src/jquery.touchtabs.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+  touchTabs = $('.tab-header').touchTabs();
+  touchTabs.createTab('tab1','Tab 1',true);
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+<p><strong>Whenever <code>touchTabs</code> is used to describe a variable, it is the variable name used when touchTabs() was created. This enables us to had many touch tabs running on the same page.</strong></p>
+
+<h3>
+<a name="how-does-this-example-work" class="anchor" href="#how-does-this-example-work"><span class="octicon octicon-link"></span></a>How does this example work?</h3>
+
+<div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"main_content_wrap"</span> <span class="na">class=</span><span class="s">"outer"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;section</span> <span class="na">id=</span><span class="s">"main_content"</span> <span class="na">class=</span><span class="s">"inner"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;style&gt;</span>
+        /* "#tab-container&gt;div" selects the tab windows we make */
+            #tab-container&gt;div {
+              overflow:auto;
+              height:100%;
+              width:100%;
+              background:#fff;
+            }
+            #tab-container&gt;div {
+              display:none;
+            }
+            #tab-container&gt;div.active {
+              display:block;
+            }
+        <span class="nt">&lt;/style&gt;</span>
+        <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"tab-header"</span><span class="nt">&gt;&lt;/ul&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"tab-container"</span><span class="nt">&gt;&lt;/div&gt;</span>
+      
+        <span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">"http://code.jquery.com/jquery-1.10.1.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">"src/jquery.touchtabs.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+        <span class="nt">&lt;script&gt;</span>
+        touchTabs = $('.tab-header').touchTabs();
+      
+        touchTabs.on('tabclose', function(event,id){
+            $('#tab-contents-'+id).remove()
+        })
+        touchTabs.on('tabactivate', function(event,id){
+            $('#tab-container').find('div').removeClass('active')
+            $("#tab-contents-"+id).addClass('active')
+        })
+        $(function() {
+            // createPane is not implemented by the plugin, this makes it more versatile
+            // the createPane function is an example of how I set up my panes
+            var createPane = function(title,html){
+                // create a random hexadecimal for the tab id
+                var randId = Math.floor(Math.random()*16777215).toString(16)
+                // this tab-container is given an id we can easily refer back to
+                $('#tab-container').append('<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"tab-contents-'+randId+'"</span><span class="nt">&gt;</span>'+html+'<span class="nt">&lt;/div&gt;</span>')
+                // createTab tabid = randId, tab title = title, tab can be closed = false
+                touchTabs.createTab(randId,title,false)
+                // return randId for activating
+                return randId
+            }
+            var activateId = createPane("Getting Started",$('div#GettingStartedContent').html())
+            createPane("1. Tab Manipulation",$('div#TabManipulationContent').html())
+            createPane("2. How to use Events",$('div#EventsContent').html())
+            createPane("3. Styling Guide",$('div#StyleGuideContent').html())
+            touchTabs.activateTabById(activateId);
+        })
+        <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;/section&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+    </div></div>
 <div style="display:none" id="TabManipulationContent"><div class="markdown-body">
       <h2>
 <a name="tab-manipulation" class="anchor" href="#tab-manipulation"><span class="octicon octicon-link"></span></a>Tab Manipulation</h2>
