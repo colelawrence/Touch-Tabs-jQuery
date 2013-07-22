@@ -39,7 +39,8 @@ class TouchTabs
     id = $(event.target).parents('li').attr('tabid')
     @activateTabById(id) if event.button is 0
     if event.button is 1
-      @closeTabById(id)
+      clos = @findById @element, id, "middle click"
+      @closeTabById(id) if clos.hasClass "closeable"
       event.preventDefault()
     @dragging = true
 

@@ -57,14 +57,17 @@ TouchTabs = (function() {
   };
 
   TouchTabs.prototype.startMouse = function(event) {
-    var id;
+    var clos, id;
     this.initMouseX = event.clientX;
     id = $(event.target).parents('li').attr('tabid');
     if (event.button === 0) {
       this.activateTabById(id);
     }
     if (event.button === 1) {
-      this.closeTabById(id);
+      clos = this.findById(this.element, id, "middle click");
+      if (clos.hasClass("closeable")) {
+        this.closeTabById(id);
+      }
       event.preventDefault();
     }
     return this.dragging = true;
